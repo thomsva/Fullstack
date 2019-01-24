@@ -13,12 +13,16 @@ const Statistics = (props) => {
   return (
     <div>
       <h1>statistiikka</h1>
-      <Statistic name={'hyvä'} value={good}></Statistic>
-      <Statistic name={'neutraali'} value={neutral}></Statistic>
-      <Statistic name={'huono'} value={bad}></Statistic>
-      <Statistic name={'yhteensä'} value={total}></Statistic>
-      <Statistic name={'keskiarvo'} value={(good * 1 + bad * -1) / (total)}></Statistic>
-      <Statistic name={'positiivisia'} value={100 * good / (total) + ' %'}></Statistic>
+      <table>
+        <tbody>
+          <Statistic name={'hyvä'} value={good}></Statistic>
+          <Statistic name={'neutraali'} value={neutral}></Statistic>
+          <Statistic name={'huono'} value={bad}></Statistic>
+          <Statistic name={'yhteensä'} value={total}></Statistic>
+          <Statistic name={'keskiarvo'} value={(good * 1 + bad * -1) / (total)}></Statistic>
+          <Statistic name={'positiivisia'} value={100 * good / (total) + ' %'}></Statistic>
+        </tbody>
+      </table>
     </div >
 
   )
@@ -26,7 +30,7 @@ const Statistics = (props) => {
 
 const Statistic = ({ name, value }) => {
   return (
-    <p>{name} {value}</p>
+    <tr><td>{name}</td><td>{value}</td></tr>
   )
 }
 
