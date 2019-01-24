@@ -3,15 +3,22 @@ import ReactDOM from 'react-dom'
 
 const Statistics = (props) => {
   const { good, neutral, bad } = props
+  const total = good + neutral + bad
+  if (total == 0) return (
+    <div>
+      <h1>statistiikka</h1>
+      <p>Ei yhtään palautetta annettu</p>
+    </div>
+  )
   return (
     <div>
       <h1>statistiikka</h1>
       <p>hyvä {good}</p>
       <p>neutraali {neutral}</p>
       <p>huono {bad}</p>
-      <p>yhteensä {good + neutral + bad}</p>
-      <p>keskiarvo {(good * 1 + bad * -1) / (good + neutral + bad)}</p>
-      <p>positiivisia {100 * good / (good + neutral + bad)} %</p>
+      <p>yhteensä {total}</p>
+      <p>keskiarvo {(good * 1 + bad * -1) / (total)}</p>
+      <p>positiivisia {100 * good / (total)} %</p>
     </div>
 
   )
