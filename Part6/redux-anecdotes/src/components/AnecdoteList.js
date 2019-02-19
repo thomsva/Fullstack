@@ -1,14 +1,14 @@
 import React from 'react';
 import { voteIncrease } from '../reducers/anecdoteReducer'
+import { notificationChange, notificationRemove } from '../reducers/notificationReducer'
 
 const AnecdoteList = (props) => {
   const store = props.store
   const anecdotes = store.getState().anecdotes
   const vote = (id) => {
-    console.log('vote', id)
-    store.dispatch(
-      voteIncrease(id)
-    )
+    store.dispatch(voteIncrease(id))
+    store.dispatch(notificationChange('you voted: ' + anecdotes.filter(a => a.id === id)[0].content))
+    setTimeout(() => { store.dispatch(notificationRemove()) }, 5000)
   }
 
   return (
