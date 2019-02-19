@@ -34,6 +34,7 @@ const reducer = (state = initialState, action) => {
     case 'NEW_ANECDOTE':
       state = state.concat(action.data)
         .sort((a1, a2) => (a2.votes - a1.votes))
+
       return state
     default:
       return state
@@ -50,7 +51,7 @@ export const voteIncrease = (id) => {
 export const createAnecdote = (content) => {
   return {
     type: 'NEW_ANECDOTE',
-    data: { content, votes: 0, id: getId }
+    data: { content, votes: 0, id: getId() }
   }
 }
 
