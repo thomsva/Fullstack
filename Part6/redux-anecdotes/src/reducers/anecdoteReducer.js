@@ -5,10 +5,9 @@ const anecdoteReducer = (state = [], action) => {
   console.log('action', action)
   switch (action.type) {
     case 'VOTE_INCREASE':
-      const id = action.data.id
+      const id = action.data.anecdote.id
       const anecdoteToChange = state.find(n => n.id === id)
-      const changedAnecdote = { ...anecdoteToChange, votes: anecdoteToChange.votes + 1 }
-
+      const changedAnecdote = { ...anecdoteToChange, votes: action.data.anecdote.votes }
       return state
         .map(anecdote => anecdote.id !== id ? anecdote : changedAnecdote)
         .sort((a1, a2) => (a2.votes - a1.votes))
@@ -23,19 +22,23 @@ const anecdoteReducer = (state = [], action) => {
   }
 }
 
-const getId = () => (100000 * Math.random()).toFixed(0)
-
-export const voteIncrease = (id) => {
-  return {
-    type: 'VOTE_INCREASE',
-    data: { id }
+export const voteIncrease = (anecdote) => {
+  return async dispatch => {
+    const newAnecdote = await anecdoteService.update({ ...anecdote, votes: anecdote.votes + 1 })
+    dispatch({
+      type: 'VOTE_INCREASE',
+      data: { anecdote: newAnecdote }
+    })
   }
 }
 
-export const createAnecdote = (content) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    data: { content, votes: 0, id: getId() }
+export const createAnecdote = content => {
+  return async dispatch => {
+    const newAnecdote = await anecdoteService.createNew(content)
+    dispatch({
+      type: 'NEW_ANECDOTE',
+      data: newAnecdote,
+    })
   }
 }
 

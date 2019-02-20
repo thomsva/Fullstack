@@ -4,9 +4,9 @@ import { voteIncrease } from '../reducers/anecdoteReducer'
 import { notificationChange, notificationRemove } from '../reducers/notificationReducer'
 
 const AnecdoteList = (props) => {
-  const vote = (id) => {
-    props.voteIncrease(id)
-    props.notificationChange('you voted: ' + props.visibleAnecdotes.filter(a => a.id === id)[0].content)
+  const vote = (anecdote) => {
+    props.voteIncrease(anecdote)
+    props.notificationChange('you voted: ' + anecdote.content)
     setTimeout(() => { props.notificationRemove() }, 5000)
   }
 
@@ -20,7 +20,7 @@ const AnecdoteList = (props) => {
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => vote(anecdote.id)}>vote</button>
+            <button onClick={() => vote(anecdote)}>vote</button>
           </div>
         </div>
       )}
