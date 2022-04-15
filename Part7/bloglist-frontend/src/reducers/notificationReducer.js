@@ -1,0 +1,30 @@
+const initialState = { text: null }
+
+const notificationReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'SET_NOTIFICATION':
+      return { text: action.text }
+    case 'REMOVE_NOTIFICATION':
+      return { text: null }
+    default:
+      return state
+  }
+}
+
+export const setNotification = (text, seconds) => {
+  return async dispatch => {
+    dispatch({
+      type: 'SET_NOTIFICATION',
+      text: text
+    })
+    setTimeout(() => {
+      dispatch({
+        type: 'REMOVE_NOTIFICATION',
+        text: text
+      })
+    }, seconds * 1000)
+  }
+}
+
+
+export default notificationReducer
