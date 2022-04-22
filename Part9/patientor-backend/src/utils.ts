@@ -45,8 +45,8 @@ export const toEntryInput = (input: unknown): EntryInput => {
     date: parseDate(entry.date),
     specialist: parseString(entry.specialist),
     diagnosisCodes: parseDiagnosisCodes(entry.diagnosisCodes),
-  };
-
+  };  
+  
   switch (parseType(entry.type))
   {
     case 'Hospital':
@@ -79,15 +79,19 @@ export const toEntryInput = (input: unknown): EntryInput => {
         };
         return newOccupationalEntry;
 
-    case 'HealthCheck':
+    case 'HealthCheck':      
       if (!(entry as HealthCheckEntry).healthCheckRating) {
         throw new Error('Invalid or missing Health Check Rating');
       }
+      
       const newHealthCheckEntry: Omit<HealthCheckEntry, 'id'> = {
         ...newBaseEntry,
         type: 'HealthCheck',
         healthCheckRating: parsehealthCheckRating((entry as HealthCheckEntry).healthCheckRating)
       };
+      
+      console.log('newHealthCheckEntry', newHealthCheckEntry);
+      
       return newHealthCheckEntry;
     default:
       throw new Error('Invalid entry');
@@ -100,7 +104,12 @@ const parsehealthCheckRating = (input: unknown): 0 | 1 | 2 | 3 => {
   }
   const rating = Number(input);
   switch (rating) {
-    case 1 || 2 || 3 || 4:
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      console.log('rating', rating);
+      
       return rating;
     default:
       throw new Error('Invalid rating');
@@ -126,9 +135,13 @@ const parseDischarge = (input: unknown): Discharge => {
 };
 
 const parseType = (input: unknown): 'Hospital' | 'HealthCheck' | 'OccupationalHealthcare' => {
-  const inputString = parseString(input);
+  const inputString = parseString(input);  
+  console.log('inputString', inputString);
+  
   switch (inputString) {
-    case 'Hospital' || 'HealthCheck' || 'OccupationalHealthcare':
+    case 'Hospital':
+    case 'HealthCheck':
+    case 'OccupationalHealthcare':      
       return inputString;
     default: 
       throw new Error('Invalid entry type');

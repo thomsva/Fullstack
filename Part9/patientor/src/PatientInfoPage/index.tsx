@@ -6,17 +6,50 @@ import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
 import TransgenderIcon from '@mui/icons-material/Transgender';
 import { addPatientData, useStateValue } from '../state';
-import { Entry, HealthCheck, HospitalEntry, OccupationalHealthcareEntry, Patient } from '../types';
-import { Card, CardContent, Chip, Divider, Stack, Typography } from '@mui/material';
+import { Entry, HealthCheckEntry, HospitalEntry, OccupationalHealthcareEntry, Patient } from '../types';
+import { Button, Card, CardContent, Chip, Divider, Grid, Stack, Typography } from '@mui/material';
 import HealthRatingBar from '../components/HealthRatingBar';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import WorkIcon from '@mui/icons-material/Work';
 import CheckIcon from '@mui/icons-material/Check';
+import AddEntryModal from '../AddEntryModal';
+import { HealthCheckEntryFormValues } from '../AddEntryModal/AddEntryForm';
 
 const PatientInfoPage = () => {
   const { id } = useParams<{ id: string }>();
-  
   const [{ patients, diagnoses }, dispatch] = useStateValue();
+
+  const [error, setError] = React.useState<string>();
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const openModal = (): void => setModalOpen(true);
+  const closeModal = (): void => {
+    setModalOpen(false);
+    setError(undefined);
+  };
+
+
+  const submitNewEntry = async (values: HealthCheckEntryFormValues) => {
+    try {
+      if (id !== undefined) {
+        const { data: patientFromApi } = await axios.post<Entry>(
+          `${apiBaseUrl}/patients/${id}/entries`,
+          values
+        );
+        console.log(patientFromApi);
+        //dispatch(addPatientData(patientFromApi));
+        closeModal();
+      }
+    } catch (e: unknown) {
+      if (axios.isAxiosError(e)) {
+        console.error(e?.response?.data || "Unrecognized axios error");
+        setError(String(e?.response?.data?.error) || "Unrecognized axios error");
+      } else {
+        console.error("Unknown error", e);
+        setError("Unknown error");
+      }
+    }
+  };
+
 
   React.useEffect(() => {
     const fetchPatient = async () => {
@@ -57,10 +90,14 @@ const PatientInfoPage = () => {
     return (
       <Card variant="outlined">
         <CardContent>
-          <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-            <Chip icon={<LocalHospitalIcon />} label="Hostpital" />
-            <Typography variant="h6" ml={2}>{entry.date}</Typography>
-          </div>
+          <Grid container>
+            <Grid item xs={6} >
+              <Chip icon={<LocalHospitalIcon />} label="Hostpital" />
+            </Grid>
+            <Grid item xs={6} >
+              <Typography variant="h6" align='right'>{entry.date}</Typography>
+            </Grid>
+          </Grid>
           <Typography>{entry.description}</Typography>
           <Typography>Specialist: {entry.specialist}</Typography>
           <Typography>Discharged on {entry.discharge.date} ({entry.discharge.criteria})</Typography>
@@ -78,11 +115,15 @@ const PatientInfoPage = () => {
   const OccupationalHealthcareDetails: React.FC<{ entry: OccupationalHealthcareEntry }> = ({ entry }) => {
     return (
       <Card variant="outlined">
-        <CardContent> 
-            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-              <Chip icon={<WorkIcon />} label="Occupational healthcare" />
-              <Typography variant="h6" ml={2}>{entry.date}</Typography>
-            </div>
+        <CardContent>
+            <Grid container>
+              <Grid item xs={6} >
+                <Chip icon={<WorkIcon />} label="Occupational healthcare" />
+              </Grid>
+              <Grid item xs={6} >
+                <Typography variant="h6" align='right'>{entry.date}</Typography>
+              </Grid>
+            </Grid>
             <Typography>{entry.description}</Typography>
             <Typography>Employer: {entry.employerName}</Typography>
             {(entry.sickLeave !== undefined)
@@ -98,14 +139,18 @@ const PatientInfoPage = () => {
     );
   };
 
-  const HealthCheckDetails: React.FC<{ entry: HealthCheck }> = ({ entry }) => {
+  const HealthCheckDetails: React.FC<{ entry: HealthCheckEntry }> = ({ entry }) => {
     return (
       <Card variant="outlined">
-        <CardContent> 
-          <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-            <Chip icon={<CheckIcon />} label="Health check" />
-            <Typography variant="h6" ml={2}>{entry.date}</Typography>
-          </div>
+        <CardContent>
+          <Grid container>
+            <Grid item xs={6} >
+              <Chip icon={<CheckIcon />} label="Health check" />
+            </Grid>
+            <Grid item xs={6} >
+              <Typography variant="h6" align='right'>{entry.date}</Typography>
+            </Grid>
+          </Grid>
           <Typography>{entry.description}</Typography>
           <Typography>{entry.specialist}</Typography>
           <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -134,6 +179,7 @@ const PatientInfoPage = () => {
 
     <Card variant="outlined" sx={{ maxWidth:500, mt:3 }}>
       <CardContent>
+
         <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
           <Typography mr={2} variant="h4">{patient.name}</Typography>
           {(patient.gender === 'male')
@@ -142,18 +188,38 @@ const PatientInfoPage = () => {
               ? <FemaleIcon />
               : <TransgenderIcon />}
         </div>
+
         <Typography>ssn: {patient.ssn}</Typography>
         <Typography>occupation: {patient.occupation}</Typography>
+
+        <Divider />
+      
+        <Grid container>
+          <Grid item xs={8}>
+            <Typography mt={2} variant="h5">Entries</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Button variant="contained" sx={{ mb:2, mt:2 }} onClick={() => openModal()}>
+              Add New Entry
+            </Button>
+          </Grid>
+        </Grid>
         {(patient.entries !== undefined && patient.entries.length > 0)
           &&
-          <>
-          <Divider />
-          <Typography mt={2} variant="h5">Entries</Typography>
           <Stack spacing={1}>
             {patient.entries.map(e => (<EntryDetails key={e.id} entry={e} />))}
           </Stack>
-          </>}
+        }
+
       </CardContent>
+
+      <AddEntryModal
+        modalOpen={modalOpen}
+        error={error}
+        onClose={closeModal}
+        onSubmit={submitNewEntry}
+      />
+
     </Card>
   );
 };

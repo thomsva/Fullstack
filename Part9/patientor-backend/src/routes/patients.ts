@@ -18,7 +18,8 @@ router.get('/', (_req, res) => {
 router.post('/:id/entries', (req, res) => {
   try {
     const newEntry = toEntryInput(req.body);
-    res.send(newEntry);
+    const patient = patientService.addEntry(newEntry, req.params.id);
+    res.send(patient);
   } catch (e) {
     res.status(400).send('Could not add entry');
   }
