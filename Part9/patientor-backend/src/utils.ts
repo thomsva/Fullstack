@@ -188,9 +188,18 @@ const parseName = (name: unknown): string => {
 
 const parseDate = (date: unknown): string => {
   if (!date || !isString(date) || !isDate(date)) {
-    throw new Error('Incorrect or missing date: ' + date);
+    throw new Error(date + ' is not a valid date');
   }
-  return date;
+  const d = new Date(Date.parse(date));
+  const today = new Date();
+  const diff = Math.abs(today.valueOf() - d.valueOf());
+
+  // Date has to be within 365 days of the current date
+  if (diff > 1000 * 60 * 60 * 24 * 365) {
+    throw new Error(d.toISOString().split('T')[0] + ' is not in the allowed date range');
+  }
+
+  return d.toISOString().split('T')[0];
 };
 
 const parseGender = (gender: unknown): Gender => {

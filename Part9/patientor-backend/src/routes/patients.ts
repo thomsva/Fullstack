@@ -21,7 +21,10 @@ router.post('/:id/entries', (req, res) => {
     const patient = patientService.addEntry(newEntry, req.params.id);
     res.send(patient);
   } catch (e) {
-    res.status(400).send('Could not add entry');
+    if (e instanceof Error) {
+      res.status(400).send(e.message);
+    }
+    res.status(400).send('Unknown error when trying to add entry');
   }
 });
 
