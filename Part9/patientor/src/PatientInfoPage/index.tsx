@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { apiBaseUrl } from '../constants';
 import FemaleIcon from '@mui/icons-material/Female';
 import MaleIcon from '@mui/icons-material/Male';
@@ -27,7 +27,6 @@ const PatientInfoPage = () => {
     setError(undefined);
   };
 
-
   const submitNewEntry = async (values: HealthCheckEntryFormValues) => {
     try {
       if (id !== undefined) {
@@ -36,7 +35,7 @@ const PatientInfoPage = () => {
           values
         );
         console.log(patientFromApi);
-        //dispatch(addPatientData(patientFromApi));
+        dispatch(addPatientData(patientFromApi as unknown as Patient));
         closeModal();
       }
     } catch (e: unknown) {
@@ -50,17 +49,18 @@ const PatientInfoPage = () => {
     }
   };
 
-
   React.useEffect(() => {
     const fetchPatient = async () => {
       try {
         if (id !== undefined) {
           // Only get data if ssn is missing
-          if (patients[id].ssn === undefined) {
-            const { data: patientFromApi } = await axios.get<Patient>(
-              `${apiBaseUrl}/patients/${id}`
-            );
-            dispatch(addPatientData(patientFromApi));
+          if (patients[id] !== undefined){
+            if (patients[id].ssn === undefined) {
+              const { data: patientFromApi } = await axios.get<Patient>(
+                `${apiBaseUrl}/patients/${id}`
+              );
+              dispatch(addPatientData(patientFromApi));
+            }
           }
         }
       } catch (e) {
@@ -169,12 +169,9 @@ const PatientInfoPage = () => {
   
     
   if (!id) return (<div>patient id missing</div>);
-
+  if (patients[id] === undefined)  return (<Navigate to='/' />);
   const patient = patients[id];
-
-  if (!patient) return (<div>patient not found in list</div>);
   
-    
   return (
 
     <Card variant="outlined" sx={{ maxWidth:500, mt:3 }}>

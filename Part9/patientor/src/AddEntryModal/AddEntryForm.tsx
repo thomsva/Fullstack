@@ -4,6 +4,8 @@ import { Field, Formik, Form } from "formik";
 
 import { TextField, SelectField, HealthCheckRatingOption } from "./FormField";
 import { HealthCheckEntry } from "../types";
+import { DiagnosisSelection } from '../AddPatientModal/FormField';
+import { useStateValue } from '../state';
 
 /*
  * use type Patient, but omit id and entries,
@@ -18,13 +20,14 @@ interface Props {
 
 
 const healthCheckRatingOptions: HealthCheckRatingOption[] = [
-  { value: 1, label: "*" },
-  { value: 2, label: "**" },
-  { value: 3, label: "***" },
-  { value: 4, label: "****" },  
+  { value: 0, label: "Healthy" },
+  { value: 1, label: "Low risk" },
+  { value: 2, label: "High risk" },
+  { value: 3, label: "Critical risk" },  
 ];
 
 export const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
+   const [{ diagnoses }] = useStateValue();
   return (
     <Formik
       initialValues={{
@@ -53,7 +56,7 @@ export const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
         return errors;
       }}
     >
-      {({ isValid, dirty }) => {
+      {({ isValid, dirty, setFieldValue, setFieldTouched }) => {
         return (
           <Form className="form ui">
             <Field
@@ -80,12 +83,11 @@ export const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
               name="type"
               component={TextField}
             />
-            <Field
-              label="Health Rating"
-              placeholder="Rating 1-4"
-              name="healthCheckRating"
-              component={TextField}
-            />
+            <DiagnosisSelection
+              setFieldValue={setFieldValue}
+              setFieldTouched={setFieldTouched}
+              diagnoses={Object.values(diagnoses)}
+            />   
             <SelectField label="Health Rating" name="healthCheckRating" options={healthCheckRatingOptions} />
             
             <Grid>
