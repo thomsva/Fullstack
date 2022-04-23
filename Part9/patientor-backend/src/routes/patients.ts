@@ -23,8 +23,9 @@ router.post('/:id/entries', (req, res) => {
   } catch (e) {
     if (e instanceof Error) {
       res.status(400).send(e.message);
+    } else {
+      res.status(400).send('Unknown error when trying to add entry');
     }
-    res.status(400).send('Unknown error when trying to add entry');
   }
 });
 
