@@ -41,6 +41,14 @@ export const AddOccupationalHealthcareEntryForm = ({ onSubmit, onCancel }: Props
         if (!values.employerName) {
           errors.employerName = requiredError;
         }
+        if (values.sickLeave?.startDate || values.sickLeave?.endDate) {
+          if (values.sickLeave.startDate && !values.sickLeave.endDate) {
+            errors.sickLeave = requiredError;
+          }
+          if (values.sickLeave.endDate && !values.sickLeave.startDate) {
+            errors.sickLeave = requiredError;
+          }
+        }
 
         return errors;
       }}
