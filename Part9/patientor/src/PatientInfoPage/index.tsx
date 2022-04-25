@@ -12,9 +12,13 @@ import HealthRatingBar from '../components/HealthRatingBar';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import WorkIcon from '@mui/icons-material/Work';
 import CheckIcon from '@mui/icons-material/Check';
-import AddEntryModal from '../AddEntry/AddHospitalEntryModal';
+//TODO: entry type
+import AddEntryModal from '../AddEntry/index';
 //import { HealthCheckEntryFormValues } from '../AddEntry/AddHealthCheckEntryModal/AddHealthCheckEntryForm';
+//import { HospitalEntryFormValues } from '../AddEntry/AddHospitalEntryModal/AddHospitalEntryForm';
+import { OccupationalHealthcareEntryFormValues } from '../AddEntry/AddOccupationaHealthCareEntryModal/AddOccupationalEntryForm';
 import { HospitalEntryFormValues } from '../AddEntry/AddHospitalEntryModal/AddHospitalEntryForm';
+import { HealthCheckEntryFormValues } from '../AddEntry/AddHealthCheckEntryModal/AddHealthCheckEntryForm';
 
 const PatientInfoPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -28,7 +32,11 @@ const PatientInfoPage = () => {
     setError(undefined);
   };
 
-  const submitNewEntry = async (values: HospitalEntryFormValues) => {
+  // TODO: entry type
+  const submitNewEntry = async (values:
+    HospitalEntryFormValues |
+    OccupationalHealthcareEntryFormValues |
+    HealthCheckEntryFormValues) => {
     try {
       if (id !== undefined) {
         const { data: patientFromApi } = await axios.post<Entry>(

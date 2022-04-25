@@ -21,7 +21,7 @@ const healthCheckRatingOptions: HealthCheckRatingOption[] = [
   { value: 3, label: "Critical risk" },  
 ];
 
-export const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
+export const AddHealthCheckEntryForm = ({ onSubmit, onCancel }: Props) => {
    const [{ diagnoses }] = useStateValue();
   return (
     <Formik
@@ -72,12 +72,6 @@ export const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
               name="specialist"
               component={TextField}
             />
-            <Field
-              label="Type"
-              placeholder="HealthCheck"
-              name="type"
-              component={TextField}
-            />
             <DiagnosisSelection
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}
@@ -117,4 +111,4 @@ export const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
   );
 };
 
-export default AddEntryForm;
+export default AddHealthCheckEntryForm;

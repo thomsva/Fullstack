@@ -40,6 +40,10 @@ export const toEntryInput = (input: unknown): EntryInput => {
 
   const entry = input as EntryInput;
 
+  console.log('this is the input', input);
+  console.log('this is the entry', entry);
+  console.log('this is the entry äs hopitalentry', entry as HospitalEntry);
+
   const newBaseEntry: Omit<BaseEntry,'type'| 'id'> = {
     description: parseString(entry.description),
     date: parseDate(entry.date),
@@ -60,9 +64,10 @@ export const toEntryInput = (input: unknown): EntryInput => {
       };
       return newHospitalEntry;
 
-      
     case 'OccupationalHealthcare':
-      if ((entry as OccupationalHealthcareEntry).sickLeave) {
+      if ((entry as OccupationalHealthcareEntry).sickLeave !== undefined) {
+        console.log('has sickleave:  ');
+        
         const newOccupationalEntry: Omit<OccupationalHealthcareEntry, 'id'> = {
           ...newBaseEntry,
           type: 'OccupationalHealthcare',
@@ -119,6 +124,8 @@ const parseSickLeave = (input: unknown): SickLeave => {
   if (!input) {
     throw new Error('Invalid sickleave');
   }
+  console.log('sickleave ', input);
+  
   return {
     startDate: parseDate((input as SickLeave).startDate),
     endDate: parseDate((input as SickLeave).endDate)
@@ -135,7 +142,6 @@ const parseDischarge = (input: unknown): Discharge => {
 
 const parseType = (input: unknown): 'Hospital' | 'HealthCheck' | 'OccupationalHealthcare' => {
   const inputString = parseString(input);  
-  console.log('inputString', inputString);
   
   switch (inputString) {
     case 'Hospital':

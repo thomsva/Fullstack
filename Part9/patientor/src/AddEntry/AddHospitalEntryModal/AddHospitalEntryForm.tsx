@@ -69,12 +69,6 @@ export const AddHospitalEntryForm = ({ onSubmit, onCancel }: Props) => {
               name="specialist"
               component={TextField}
             />
-            <Field
-              label="Type"
-              placeholder="Hospital"
-              name="type"
-              component={TextField}
-            />
             <DiagnosisSelection
               setFieldValue={setFieldValue}
               setFieldTouched={setFieldTouched}

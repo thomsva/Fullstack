@@ -5,6 +5,7 @@ import {
   MenuItem,
   TextField as TextFieldMUI,
   Typography,
+  FormControl,
 } from "@mui/material";
 import { InputLabel } from "@mui/material";
 
@@ -24,7 +25,7 @@ type SelectFieldProps = {
 const FormikSelect = ({ field, ...props }: FieldProps) => <Select {...field} {...props} />;
 
 export const SelectField = ({ name, label, options }: SelectFieldProps) => (
-  <>
+  <FormControl fullWidth={true} sx={{marginBottom: 2}}>
     <InputLabel>{label}</InputLabel>
     <Field
       fullWidth
@@ -39,7 +40,7 @@ export const SelectField = ({ name, label, options }: SelectFieldProps) => (
         </MenuItem>
       ))}
     </Field>
-  </>
+  </FormControl>
 );
 
 interface TextProps extends FieldProps {

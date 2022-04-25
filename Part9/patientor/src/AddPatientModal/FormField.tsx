@@ -6,10 +6,11 @@ import {
   MenuItem,
   TextField as TextFieldMUI,
   Typography,
+  OutlinedInput,
 } from "@mui/material";
 import { Diagnosis, Gender } from "../types";
 import { InputLabel } from "@mui/material";
-import Input from '@mui/material/Input';
+// import Input from '@mui/material/Input';
 
 // structure of a single option
 export type GenderOption = {
@@ -124,9 +125,13 @@ export const DiagnosisSelection = ({
   }));
 
   return (
-    <FormControl style={{ width: 552, marginBottom: '30px' }}>
+    <FormControl fullWidth={true} sx={{marginBottom: 2}}>
       <InputLabel>Diagnoses</InputLabel>
-      <Select multiple value={selectedDiagnoses} onChange={(e) => onChange(e.target.value as string[])} input={<Input />}>
+      <Select
+        multiple value={selectedDiagnoses}
+        onChange={(e) => onChange(e.target.value as string[])}
+        input={<OutlinedInput label="Diagnoses" />}
+      >
         {stateOptions.map((option) => (
           <MenuItem key={option.key} value={option.value}>
             {option.text}
