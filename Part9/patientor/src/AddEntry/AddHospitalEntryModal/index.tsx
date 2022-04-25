@@ -1,12 +1,12 @@
 import React from "react";
 import { Dialog, DialogTitle, DialogContent, Divider } from "@mui/material";
 import { Alert } from '@mui/material';
-import AddEntryForm, { HealthCheckEntryFormValues } from "./AddEntryForm";
+import AddEntryForm, { HospitalEntryFormValues } from "./AddHospitalEntryForm";
 
 interface Props {
   modalOpen: boolean;
   onClose: () => void;
-  onSubmit: (values: HealthCheckEntryFormValues) => void;
+  onSubmit: (values: HospitalEntryFormValues) => void;
   error?: string;
 }
 

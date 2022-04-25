@@ -50,12 +50,11 @@ export const toEntryInput = (input: unknown): EntryInput => {
   switch (parseType(entry.type))
   {
     case 'Hospital':
-      if (entry.specialist !== 'MD House') {
-        throw new Error('Invalid specialist');
+      if (!(entry as HospitalEntry).discharge) {
+        throw new Error('Invalid or missing discharge info');
       }
       const newHospitalEntry: Omit<HospitalEntry, 'id'> = {
         ...newBaseEntry,
-        specialist: 'MD House',
         type: 'Hospital',
         discharge: parseDischarge((entry as HospitalEntry).discharge)
       };

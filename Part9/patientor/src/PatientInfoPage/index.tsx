@@ -12,8 +12,9 @@ import HealthRatingBar from '../components/HealthRatingBar';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import WorkIcon from '@mui/icons-material/Work';
 import CheckIcon from '@mui/icons-material/Check';
-import AddEntryModal from '../AddEntryModal';
-import { HealthCheckEntryFormValues } from '../AddEntryModal/AddEntryForm';
+import AddEntryModal from '../AddEntry/AddHospitalEntryModal';
+//import { HealthCheckEntryFormValues } from '../AddEntry/AddHealthCheckEntryModal/AddHealthCheckEntryForm';
+import { HospitalEntryFormValues } from '../AddEntry/AddHospitalEntryModal/AddHospitalEntryForm';
 
 const PatientInfoPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -27,7 +28,7 @@ const PatientInfoPage = () => {
     setError(undefined);
   };
 
-  const submitNewEntry = async (values: HealthCheckEntryFormValues) => {
+  const submitNewEntry = async (values: HospitalEntryFormValues) => {
     try {
       if (id !== undefined) {
         const { data: patientFromApi } = await axios.post<Entry>(

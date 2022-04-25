@@ -30,7 +30,7 @@ interface BaseEntry {
 
 export interface HospitalEntry extends BaseEntry {
   type: 'Hospital';
-  specialist: 'MD House';
+  specialist: string;
   discharge: Discharge
 }
 
@@ -40,7 +40,7 @@ interface Discharge {
 }
 export interface OccupationalHealthcareEntry extends BaseEntry {
   type: 'OccupationalHealthcare';
-  employerName: 'HyPD';
+  employerName: string;
   sickLeave?: SickLeave;
 }
 
