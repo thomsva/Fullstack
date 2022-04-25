@@ -1,9 +1,8 @@
 import React from "react";
-import { Dialog, DialogContent, Divider, Box, Tabs, Tab, Typography } from "@mui/material";
-import { Alert } from '@mui/material';
-import AddOccupationalHealthcareEntryForm, { OccupationalHealthcareEntryFormValues } from "./AddOccupationaHealthCareEntryModal/AddOccupationalEntryForm";
-import AddHospitalEntryForm, { HospitalEntryFormValues } from './AddHospitalEntryModal/AddHospitalEntryForm';
-import AddHealthCheckEntryForm, { HealthCheckEntryFormValues } from './AddHealthCheckEntryModal/AddHealthCheckEntryForm';
+import { Dialog, DialogContent, Divider, Box, Tabs, Tab, Typography, DialogTitle, Paper, Alert } from "@mui/material";
+import AddOccupationalHealthcareEntryForm, { OccupationalHealthcareEntryFormValues } from "./AddOccupationaHealthCareEntry/AddOccupationalEntryForm";
+import AddHospitalEntryForm, { HospitalEntryFormValues } from './AddHospitalEntry/AddHospitalEntryForm';
+import AddHealthCheckEntryForm, { HealthCheckEntryFormValues } from './AddHealthCheckEntry/AddHealthCheckEntryForm';
 
 interface Props {
   modalOpen: boolean;
@@ -19,6 +18,7 @@ interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
   value: number;
+  x?: string;
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -55,7 +55,8 @@ const AddEntryModal = ({ modalOpen, onClose, onSubmit, error }: Props) => {
     setValue(newValue);
   };
   return (
-    <Dialog fullWidth={true} open={modalOpen} onClose={() => onClose()}>
+    <Dialog PaperComponent={Paper} fullWidth={true} open={modalOpen} onClose={() => onClose()}>
+      <DialogTitle>Add a new entry</DialogTitle>
       <Divider />
       <DialogContent>
         {error && <Alert severity="error">{`Error: ${error}`}</Alert>}
@@ -67,15 +68,15 @@ const AddEntryModal = ({ modalOpen, onClose, onSubmit, error }: Props) => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <Typography variant="h5" mb={2}>Add a new hospital entry</Typography>
+          <Typography variant="h6" mb={2}>Add a new hospital entry</Typography>
           <AddHospitalEntryForm onSubmit={onSubmit} onCancel={onClose} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Typography variant="h5" mb={2}>Add a new occupational healthcare entry</Typography>
+          <Typography variant="h6" mb={2}>Add a new occupational healthcare entry</Typography>
           <AddOccupationalHealthcareEntryForm onSubmit={onSubmit} onCancel={onClose} />
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <Typography variant="h5" mb={2}>Add a new healthcheck entry</Typography>
+          <Typography variant="h6" mb={2}>Add a new healthcheck entry</Typography>
           <AddHealthCheckEntryForm onSubmit={onSubmit} onCancel={onClose} />
         </TabPanel>
       </DialogContent>
@@ -83,4 +84,6 @@ const AddEntryModal = ({ modalOpen, onClose, onSubmit, error }: Props) => {
   );
 };
 
+
 export default AddEntryModal;
+

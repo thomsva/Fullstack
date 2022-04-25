@@ -17,6 +17,7 @@ interface Props {
 export const AddOccupationalHealthcareEntryForm = ({ onSubmit, onCancel }: Props) => {
    const [{ diagnoses }] = useStateValue();
   return (
+    <>
     <Formik
       initialValues={{
         description: "",
@@ -125,7 +126,9 @@ export const AddOccupationalHealthcareEntryForm = ({ onSubmit, onCancel }: Props
           </Form>
         );
       }}
-    </Formik>
+      </Formik>
+    </>
+      
   );
 };
 

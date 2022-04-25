@@ -13,12 +13,12 @@ import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import WorkIcon from '@mui/icons-material/Work';
 import CheckIcon from '@mui/icons-material/Check';
 //TODO: entry type
-import AddEntryModal from '../AddEntry/index';
+import AddEntryModal from '../AddEntryModal/index';
 //import { HealthCheckEntryFormValues } from '../AddEntry/AddHealthCheckEntryModal/AddHealthCheckEntryForm';
 //import { HospitalEntryFormValues } from '../AddEntry/AddHospitalEntryModal/AddHospitalEntryForm';
-import { OccupationalHealthcareEntryFormValues } from '../AddEntry/AddOccupationaHealthCareEntryModal/AddOccupationalEntryForm';
-import { HospitalEntryFormValues } from '../AddEntry/AddHospitalEntryModal/AddHospitalEntryForm';
-import { HealthCheckEntryFormValues } from '../AddEntry/AddHealthCheckEntryModal/AddHealthCheckEntryForm';
+import { OccupationalHealthcareEntryFormValues } from '../AddEntryModal/AddOccupationaHealthCareEntry/AddOccupationalEntryForm';
+import { HospitalEntryFormValues } from '../AddEntryModal/AddHospitalEntry/AddHospitalEntryForm';
+import { HealthCheckEntryFormValues } from '../AddEntryModal/AddHealthCheckEntry/AddHealthCheckEntryForm';
 
 const PatientInfoPage = () => {
   const { id } = useParams<{ id: string }>();
