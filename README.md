@@ -10,3 +10,5 @@
 - Part 7: React router, custom hooks, styling app with CSS and webpack
 - Part 8: GraphQL
 - Part 9: TypeScript
+- Part 11: CI/CD
+- Part 12: Containers
