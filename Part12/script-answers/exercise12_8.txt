@@ -1,0 +1,55 @@
+[thomas@bettyx Part12]$ docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                         NAMES
+9a8811258b9d   mongo     "docker-entrypoint.s…"   24 minutes ago   Up 24 minutes   0.0.0.0:3456->27017/tcp, :::3456->27017/tcp   todo-backend-mongo-1
+[thomas@bettyx Part12]$ docker exec -ti 9a8811258b9d /bin/bash
+root@9a8811258b9d:/# mongo -u root -p example
+MongoDB shell version v5.0.8
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("1386bc86-6794-4e7a-8e7e-80f48db9acec") }
+MongoDB server version: 5.0.8
+================
+Warning: the "mongo" shell has been superseded by "mongosh",
+which delivers improved usability and compatibility.The "mongo" shell has been deprecated and will be removed in
+an upcoming release.
+For installation instructions, see
+https://docs.mongodb.com/mongodb-shell/install/
+================
+---
+The server generated these startup warnings when booting: 
+        2022-05-05T07:50:25.746+00:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> show dbs
+admin         0.000GB
+config        0.000GB
+local         0.000GB
+the_database  0.000GB
+> use the_database
+switched to db the_database
+> show collections
+todos
+> db.todos.find({})
+{ "_id" : ObjectId("627381c0456d178603337525"), "text" : "Write code", "done" : true }
+{ "_id" : ObjectId("627381c0456d178603337526"), "text" : "Learn about containers", "done" : false }
+> db.todos.insertOne( { text: "Increase the number of tools in my toolbelt", done: true } )
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("627388971c2573d647c23c2d")
+}
+> db.todos.find({})
+{ "_id" : ObjectId("627381c0456d178603337525"), "text" : "Write code", "done" : true }
+{ "_id" : ObjectId("627381c0456d178603337526"), "text" : "Learn about containers", "done" : false }
+{ "_id" : ObjectId("627388971c2573d647c23c2d"), "text" : "Increase the number of tools in my toolbelt", "done" : true }
+> exit
+bye
+root@9a8811258b9d:/# 
