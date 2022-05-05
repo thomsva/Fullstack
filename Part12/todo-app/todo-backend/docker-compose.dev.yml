@@ -18,6 +18,9 @@ services:
     ports: 
       - 6379:6379
     command: redis-server --save 20 1 --loglevel warning 
+    volumes: # Declare the volume
+      - redis_data:/data
     
 volumes:
   mongo_data:
+  redis_data:
