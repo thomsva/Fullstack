@@ -1,0 +1,28 @@
+version: "3.8"
+
+services: 
+  frontend: 
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile 
+    ports:
+      - 3000:5000
+    container_name: frontend
+  backend:
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile 
+    environment:
+      - PORT=3001
+      - MONGODB_URI=${MONGODB_URI}
+      - NODE_ENV=production
+    ports:
+      - 3001:3001
+    volumes:
+      - ./backend:/usr/src/app
+    container_name: backend
+    links: 
+      - mongo
+    depends_on:
+      - mongo
+    command: ["node", "index.js"]

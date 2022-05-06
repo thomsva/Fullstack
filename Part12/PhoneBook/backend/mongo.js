@@ -3,7 +3,7 @@ require('dotenv').config()
 
 const uri = process.env.MONGODB_URI
 
-// const uri = 'mongodb://root:example@mongo:27017/db?authSource=admin'
+console.log('-----------------', uri)
 
 if (!uri && process.env.NODE_ENV !== 'test') {
   throw new Error('Missing MONGODB_URI')
