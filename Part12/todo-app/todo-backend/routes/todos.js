@@ -45,11 +45,10 @@ singleRouter.get('/', async (req, res) => {
 
 /* PUT todo. */
 singleRouter.put('/', async (req, res) => {
-  await Todo.findOne({ _id: req.todo._id }, req.todo)
-  res.send(req.todo)
+  await Todo.findOneAndUpdate({ _id: req.todo._id }, req.body)
+  res.sendStatus(200)
 });
 
 router.use('/:id', findByIdMiddleware, singleRouter)
-
 
 module.exports = router;
