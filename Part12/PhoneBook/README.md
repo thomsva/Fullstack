@@ -6,7 +6,7 @@ docker-compose -f docker-compose.dev.yml up
 ```
 
 Opens a hotloading frontend at http://localhost:3000 and a backend in http://localhost:3001. Also a persistent local Mongo database for development purposes is provided. 
-### Running the app in development mode
+## Running the app in production mode
 ```
 docker-compose -f docker-compose.dev.yml up
 ```
