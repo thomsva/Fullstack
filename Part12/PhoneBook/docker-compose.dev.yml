@@ -1,0 +1,53 @@
+version: "3.8"
+
+services: 
+  dev-frontend: 
+    build:
+      context: ./frontend/
+      dockerfile: dev.Dockerfile 
+    environment:
+      - REACT_APP_API=http://localhost:3001
+    volumes:
+      - ./frontend:/usr/src/app
+    ports:
+      - 3000:3000
+    container_name: dev-frontend
+  dev-backend:
+    build:
+      context: ./backend/
+      dockerfile: dev.Dockerfile 
+    environment:
+      - PORT=3001
+      - MONGODB_URI=mongodb://root:example@mongo:27017/db?authSource=admin
+    ports:
+      - 3001:3001
+    volumes:
+      - ./backend:/usr/src/app
+    container_name: dev-backend
+    links: 
+      - mongo
+    depends_on:
+      - mongo
+    command:
+      - ./wait-for.sh
+      - --timeout=15
+      - mongo:27017
+      - --
+      - bash
+      - -c
+      - nodemon
+      - index.js
+  mongo:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: db
+    volumes: 
+      - mongo_data:/data/db
+    container_name: mongo
+
+volumes: 
+  mongo_data:
