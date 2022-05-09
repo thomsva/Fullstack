@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     padding: 8,
     flexWrap: 'nowrap',
     display: 'flex',
-    height: 70,
+    height: 80,
     alignItems: 'flex-end'
   },
   scrollHorisontal: {
