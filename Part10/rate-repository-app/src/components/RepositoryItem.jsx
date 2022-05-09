@@ -5,16 +5,17 @@ import theme from '../theme';
 const styles = StyleSheet.create({
   avatarImage: {
     marginTop: 8,
+    marginRight: 8,
     flex: 0,
-    width: 70,
-    height: 70,
+    minWidth: 80,
+    minHeight: 80,
     resizeMode: 'cover',
     borderRadius: 8
   },
   containerHorisontal: {
     display: 'flex',
     flexDirection: 'row',
-    backgroundColor: theme.palette.primary_light,
+    backgroundColor: theme.palette.light,
     flexWrap: 'nowrap',
     alignItems: 'flex-start',
     alignContent: 'flex-start',
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
   containerVertical: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: theme.palette.primary_light,
+    backgroundColor: theme.palette.light,
     flexWrap: 'nowrap',
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
@@ -32,7 +33,8 @@ const styles = StyleSheet.create({
   },
   itemStat: {
     flexGrow: 0,
-    padding: 4
+    padding: 4,
+    alignItems: 'center'
   },
   itemLarge: {
     flex: 1,
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   language: {
-    backgroundColor: theme.palette.secondary,
+    backgroundColor: theme.palette.primary,
     padding: 8,
     color: theme.palette.light,
     borderRadius: 8,
@@ -66,7 +68,7 @@ const RepositoryItem = ({ item }) => {
         <View style={styles.itemLarge}>
           <View style={styles.containerVertical}>
             <View style={styles.itemLarge}>
-              <Text fontSize='subheading' fontWeight='bold'>{item.id}</Text>
+              <Text fontSize='heading' fontWeight='bold'>{item.fullName}</Text>
               <Text>{item.description}</Text>
             </View>
             <View style={styles.itemLarge}>

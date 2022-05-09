@@ -1,16 +1,17 @@
 const theme = {
   palette: {
     dark: '#000000',
-    light: '#FFFFFF',
-    primary: '#1976d2',
+    light: '#ffffff',
+    primary: '#0366d6',
     primary_light: '#42a5f5',
     secondary: '#ba68c8',
-    
+    mainBackground: '#e1e4e8'
   },
   fontSizes: {
     body: 14,
-    subheading: 16,
-    tabheading: 29
+    subheading: 18,
+    heading: 22,
+    tabheading: 28
   },
   fonts: {
     main: 'System',
