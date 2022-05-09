@@ -52,15 +52,14 @@ const styles = StyleSheet.create({
   }
 })
 
+
 const toKilos = (number) => {
   if (number < 1000) return number;
   return Math.round(number / 1000 * 10) / 10 + 'k';
 }
 
 const RepositoryItem = ({ item }) => {
-  console.log(item);
   const img = item.ownerAvatarUrl;
-  console.log('img', img);
   return (
     <View> 
       <View style={styles.containerHorisontal}>
