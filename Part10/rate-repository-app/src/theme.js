@@ -11,7 +11,7 @@ const theme = {
     body: 14,
     subheading: 18,
     heading: 22,
-    tabheading: 22
+    button: 22
   },
   fonts: {
     main: 'System',

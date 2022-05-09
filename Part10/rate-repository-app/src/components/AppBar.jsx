@@ -38,10 +38,10 @@ const AppBar = () => {
     <ScrollView horisontal style={styles.scrollHorisontal}>
       <View style={styles.tabsContainer}>
         <Link to='/' style={styles.itemLarge} text='Repositories' component={View}>
-          <Text fontSize='tabheading' fontWeight='bold' color='light'>Repositories</Text>
+          <Text fontSize='button' fontWeight='bold' color='light'>Repositories</Text>
         </Link>
         <Link to='/signIn' style={styles.itemLarge} component={View}>
-          <Text fontSize='tabheading' fontWeight='bold' color='light'>Sign in</Text>
+          <Text fontSize='button' fontWeight='bold' color='light'>Sign in</Text>
         </Link>
       </View>
     </ScrollView>
