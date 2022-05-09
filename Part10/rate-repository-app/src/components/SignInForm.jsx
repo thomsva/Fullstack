@@ -7,7 +7,7 @@ import theme from '../theme'
 const styles = StyleSheet.create({
   containerVertical: {
     flex: 1,
-    backgroundColor: theme.palette.mainBackground,
+    backgroundColor: theme.palette.light,
     flexDirection: 'column',
     padding: 8,
     flexWrap: 'nowrap',
@@ -21,6 +21,8 @@ const styles = StyleSheet.create({
     backgroundColor: theme.palette.light,
     marginTop: 8,
     marginBottom: 8,
+    borderColor: theme.palette.mainBackground,
+    borderWidth: 2
   },
   itemButton: {
     padding: 12,
