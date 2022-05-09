@@ -17,11 +17,13 @@ const styles = StyleSheet.create({
   },
   itemSmall: {
     flexGrow: 0,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding: 8,
   },
   itemLarge: {
     flexGrow: 1,
     justifyContent: 'center',
+    padding: 8,
   }
 });
 
