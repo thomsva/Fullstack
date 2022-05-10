@@ -4,6 +4,7 @@ import SignInForm from './SignInForm';
 import * as yup from 'yup';
 import useSignIn from '../hooks/useSignIn';
 
+
 const initialValues = {
   username: '',
   password: '',
@@ -19,7 +20,7 @@ const validationSchema = yup.object().shape({
 });
 
 const SignIn = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const [signIn, result] = useSignIn();
 
   const onSubmit = async values => {
@@ -30,20 +31,18 @@ const SignIn = () => {
       console.error(e)
     }
   };
-  console.log('res', result)
 
-  // Result will contain token if credentials are ok
   if (!result.loading && result.called) {
     try {
       if (result.data.authenticate.accessToken) {
-        console.log('redirect...');
+        // TODO: Causes warning Cannot update a component MemoryRouter...
         navigate('/', { replace: true });
       }
     } catch (e) {
       console.error('Authentication failed:', e);
     }
-
   } 
+
 
   return (
     <Formik
