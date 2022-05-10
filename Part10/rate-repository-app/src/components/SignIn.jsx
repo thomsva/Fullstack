@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-native';
 import { Formik } from 'formik';
 import SignInForm from './SignInForm';
 import * as yup from 'yup';
@@ -18,6 +19,7 @@ const validationSchema = yup.object().shape({
 });
 
 const SignIn = () => {
+  let navigate = useNavigate();
   const [signIn, result] = useSignIn();
 
   const onSubmit = async values => {
@@ -28,9 +30,20 @@ const SignIn = () => {
       console.error(e)
     }
   };
+  console.log('res', result)
 
   // Result will contain token if credentials are ok
-  if (!result.loading) console.log('result:', result)
+  if (!result.loading && result.called) {
+    try {
+      if (result.data.authenticate.accessToken) {
+        console.log('redirect...');
+        navigate('/', { replace: true });
+      }
+    } catch (e) {
+      console.error('Authentication failed:', e);
+    }
+
+  } 
 
   return (
     <Formik
