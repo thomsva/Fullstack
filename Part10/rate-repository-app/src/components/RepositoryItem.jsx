@@ -60,13 +60,17 @@ const toKilos = (number) => {
 const RepositoryItem = ({ item }) => {
   const img = item.ownerAvatarUrl;
   return (
-    <View>
+    <View testID="repositoryItem">
       <View style={styles.containerHorisontal}>
-        <Image style={styles.avatarImage} source={{ uri: img }} />
+        <Image
+          testID="image"
+          style={styles.avatarImage}
+          source={{ uri: img }}
+        />
         <View style={styles.itemLarge}>
           <View style={styles.containerVertical}>
             <View style={styles.itemLarge}>
-              <Text fontSize='heading' fontWeight='bold'>
+              <Text fontSize="heading" fontWeight="bold">
                 {item.fullName}
               </Text>
               <Text>{item.description}</Text>
@@ -79,28 +83,28 @@ const RepositoryItem = ({ item }) => {
       </View>
       <View style={styles.containerHorisontal}>
         <View style={styles.itemStat}>
-          <Text fontSize='subheading' fontWeight='bold'>
+          <Text fontSize="subheading" fontWeight="bold">
             {toKilos(item.stargazersCount)}
           </Text>
-          <Text fontSize='subheading'>Stars</Text>
+          <Text fontSize="subheading">Stars</Text>
         </View>
         <View style={styles.itemStat}>
-          <Text fontSize='subheading' fontWeight='bold'>
+          <Text fontSize="subheading" fontWeight="bold">
             {toKilos(item.forksCount)}
           </Text>
-          <Text fontSize='subheading'>Forks</Text>
+          <Text fontSize="subheading">Forks</Text>
         </View>
         <View style={styles.itemStat}>
-          <Text fontSize='subheading' fontWeight='bold'>
+          <Text fontSize="subheading" fontWeight="bold">
             {toKilos(item.reviewCount)}
           </Text>
-          <Text fontSize='subheading'>Reviews</Text>
+          <Text fontSize="subheading">Reviews</Text>
         </View>
         <View style={styles.itemStat}>
-          <Text fontSize='subheading' fontWeight='bold'>
+          <Text fontSize="subheading" fontWeight="bold">
             {toKilos(item.ratingAverage)}
           </Text>
-          <Text fontSize='subheading'>Rating</Text>
+          <Text fontSize="subheading">Rating</Text>
         </View>
       </View>
     </View>

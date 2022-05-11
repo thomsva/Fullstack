@@ -49,27 +49,25 @@ const AppBar = () => {
     }
   };
 
-  const { me, loading } = useUserSignedIn();
-  console.log('me', me);
-  console.log('loading', loading);
+  const { me } = useUserSignedIn();
 
   return (
     <View style={styles.container}>
       <ScrollView horisontal style={styles.scrollHorisontal}>
         <View style={styles.tabsContainer}>
           <Link
-            to='/'
+            to="/"
             style={styles.itemLarge}
-            text='Repositories'
+            text="Repositories"
             component={View}
           >
-            <Text fontSize='button' fontWeight='bold' color='light'>
+            <Text fontSize="button" fontWeight="bold" color="light">
               Repositories
             </Text>
           </Link>
           {!me && (
-            <Link to='/signIn' style={styles.itemLarge} component={View}>
-              <Text fontSize='button' fontWeight='bold' color='light'>
+            <Link to="/signIn" style={styles.itemLarge} component={View}>
+              <Text fontSize="button" fontWeight="bold" color="light">
                 Sign in
               </Text>
             </Link>
@@ -80,7 +78,7 @@ const AppBar = () => {
               style={styles.itemLarge}
               component={View}
             >
-              <Text fontSize='button' fontWeight='bold' color='light'>
+              <Text fontSize="button" fontWeight="bold" color="light">
                 Sign out
               </Text>
             </Pressable>

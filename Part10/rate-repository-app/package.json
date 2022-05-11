@@ -18,6 +18,9 @@
     },
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|react-router-native)"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupTests.js"
     ]
   },
   "dependencies": {
@@ -39,6 +42,8 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/eslint-parser": "^7.17.0",
+    "@testing-library/jest-native": "^4.0.4",
+    "@testing-library/react-native": "^9.1.0",
     "eslint": "^8.15.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^26.1.5",
@@ -47,7 +52,8 @@
     "eslint-plugin-react-native": "^4.0.0",
     "jest": "^27.5.1",
     "jest-expo": "^45.0.1",
-    "prettier": "^2.6.2"
+    "prettier": "^2.6.2",
+    "react-test-renderer": "^17.0.1"
   },
   "private": true
 }
