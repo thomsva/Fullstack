@@ -47,10 +47,12 @@ describe('RepositoryList', () => {
         ],
       };
 
-      const { debug, getAllByTestId } = render(
+      const { getAllByTestId } = render(
         <RepositoryListContainer repositories={repositories} />
       );
-      debug();
+
+      // debug();
+
       const repositoryItems = getAllByTestId('repositoryItem');
       const images = getAllByTestId('image');
       const [firstRepositoryItem, secondRepositoryItem] = repositoryItems;
