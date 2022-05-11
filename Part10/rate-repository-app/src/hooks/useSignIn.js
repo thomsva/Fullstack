@@ -15,6 +15,7 @@ const useSignIn = () => {
       apolloClient.resetStore();
       
     } catch (e) {
+      // Wrong credentials triggers error
       console.error(e);
     }
 

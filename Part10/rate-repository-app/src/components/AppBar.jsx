@@ -1,9 +1,11 @@
-import { View, StyleSheet, ScrollView} from 'react-native';
+import { View, Pressable, StyleSheet, ScrollView} from 'react-native';
 import Constants from 'expo-constants';
 import theme from '../theme';
 import Text from './Text';
 import { Link } from 'react-router-native';
 import useUserSignedIn from '../hooks/useUserSignedIn';
+import useAuthStorage from '../hooks/useAuthStorage';
+import { useApolloClient } from '@apollo/client';
 
 const styles = StyleSheet.create({
   container: {
@@ -34,6 +36,19 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
+  const apolloClient = useApolloClient();
+  const authStorage = useAuthStorage();
+
+  const clickSignOut = async () => {
+    try {
+      console.log('try logout')
+      await authStorage.removeAccessToken();
+      await apolloClient.resetStore();
+    } catch (e) {
+      console.error(e)
+    }
+  };
+
   const { me, loading } = useUserSignedIn();
   console.log('me', me);
   console.log('loading', loading)
@@ -46,13 +61,16 @@ const AppBar = () => {
         <Link to='/' style={styles.itemLarge} text='Repositories' component={View}>
           <Text fontSize='button' fontWeight='bold' color='light'>Repositories</Text>
         </Link>
-        <Link to='/signIn' style={styles.itemLarge} component={View}>
-          <Text fontSize='button' fontWeight='bold' color='light'>Sign in</Text>
-        </Link>
-        
-          {me && (<Link to='/signIn' style={styles.itemLarge} component={View}>
-            <Text fontSize='button' fontWeight='bold' color='light'>{me.username}</Text>
-        </Link>)}
+        {!me && (
+          <Link to='/signIn' style={styles.itemLarge} component={View}>
+            <Text fontSize='button' fontWeight='bold' color='light'>Sign in</Text>
+          </Link>
+        )}
+        {me && (
+          <Pressable onPress={clickSignOut} style={styles.itemLarge} component={View}>
+            <Text fontSize='button' fontWeight='bold' color='light'>Sign out</Text>
+          </Pressable>
+        )}
         
       </View>
     </ScrollView>

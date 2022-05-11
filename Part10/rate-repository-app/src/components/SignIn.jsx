@@ -35,7 +35,7 @@ const SignIn = () => {
   if (!result.loading && result.called) {
     try {
       if (result.data.authenticate.accessToken) {
-        // TODO: Causes warning Cannot update a component MemoryRouter...
+        // TODO: Causes warning 'Cannot update a component MemoryRouter...'
         navigate('/', { replace: true });
       }
     } catch (e) {
