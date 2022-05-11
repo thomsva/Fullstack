@@ -8,13 +8,12 @@ import Text from './Text';
 const styles = StyleSheet.create({
   errorText: {
     marginTop: 0,
-    color: theme.palette.error
+    color: theme.palette.error,
   },
   errorBorder: {
-    borderColor: theme.palette.error
-  }
+    borderColor: theme.palette.error,
+  },
 });
-
 
 const FormikTextInput = ({ name, ...props }) => {
   const [field, meta, helpers] = useField(name);
@@ -23,7 +22,7 @@ const FormikTextInput = ({ name, ...props }) => {
   return (
     <>
       <TextInput
-        onChangeText={value => helpers.setValue(value)}
+        onChangeText={(value) => helpers.setValue(value)}
         onBlur={() => helpers.setTouched(true)}
         value={field.value}
         error={showError}

@@ -1,8 +1,7 @@
-
-import { Pressable, StyleSheet, View } from 'react-native'
-import FormikTextInput from './FormikTextInput'
-import Text from './Text'
-import theme from '../theme'
+import { Pressable, StyleSheet, View } from 'react-native';
+import FormikTextInput from './FormikTextInput';
+import Text from './Text';
+import theme from '../theme';
 
 const styles = StyleSheet.create({
   containerVertical: {
@@ -12,7 +11,7 @@ const styles = StyleSheet.create({
     padding: 8,
     flexWrap: 'nowrap',
     height: 80,
-    alignItems: 'stretch'
+    alignItems: 'stretch',
   },
 
   itemTextField: {
@@ -22,24 +21,21 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginBottom: 8,
     borderColor: theme.palette.mainBackground,
-    borderWidth: 2
+    borderWidth: 2,
   },
   itemButton: {
     padding: 12,
     marginTop: 8,
     backgroundColor: theme.palette.primary,
     borderRadius: 8,
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
   },
   buttonText: {
-    alignSelf: 'center'
-  }
-
-})
-
+    alignSelf: 'center',
+  },
+});
 
 const SignInForm = ({ onSubmit }) => {
-
   return (
     <View style={styles.containerVertical}>
       <FormikTextInput
@@ -64,7 +60,7 @@ const SignInForm = ({ onSubmit }) => {
         </Text>
       </Pressable>
     </View>
-  )
-}
+  );
+};
 
-export default SignInForm
+export default SignInForm;

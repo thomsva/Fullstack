@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     minWidth: 80,
     minHeight: 80,
     resizeMode: 'cover',
-    borderRadius: 8
+    borderRadius: 8,
   },
   containerHorisontal: {
     display: 'flex',
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   itemStat: {
     flexGrow: 0,
     padding: 4,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   itemLarge: {
     flex: 1,
@@ -48,26 +48,27 @@ const styles = StyleSheet.create({
     color: theme.palette.light,
     borderRadius: 8,
     marginTop: 8,
-    overflow: 'hidden'
-  }
-})
-
+    overflow: 'hidden',
+  },
+});
 
 const toKilos = (number) => {
   if (number < 1000) return number;
-  return Math.round(number / 1000 * 10) / 10 + 'k';
-}
+  return Math.round((number / 1000) * 10) / 10 + 'k';
+};
 
 const RepositoryItem = ({ item }) => {
   const img = item.ownerAvatarUrl;
   return (
-    <View> 
+    <View>
       <View style={styles.containerHorisontal}>
         <Image style={styles.avatarImage} source={{ uri: img }} />
         <View style={styles.itemLarge}>
           <View style={styles.containerVertical}>
             <View style={styles.itemLarge}>
-              <Text fontSize='heading' fontWeight='bold'>{item.fullName}</Text>
+              <Text fontSize='heading' fontWeight='bold'>
+                {item.fullName}
+              </Text>
               <Text>{item.description}</Text>
             </View>
             <View style={styles.itemLarge}>
@@ -78,24 +79,32 @@ const RepositoryItem = ({ item }) => {
       </View>
       <View style={styles.containerHorisontal}>
         <View style={styles.itemStat}>
-          <Text fontSize='subheading' fontWeight='bold'>{toKilos(item.stargazersCount)}</Text>
+          <Text fontSize='subheading' fontWeight='bold'>
+            {toKilos(item.stargazersCount)}
+          </Text>
           <Text fontSize='subheading'>Stars</Text>
         </View>
         <View style={styles.itemStat}>
-          <Text fontSize='subheading' fontWeight='bold'>{toKilos(item.forksCount)}</Text>
+          <Text fontSize='subheading' fontWeight='bold'>
+            {toKilos(item.forksCount)}
+          </Text>
           <Text fontSize='subheading'>Forks</Text>
         </View>
         <View style={styles.itemStat}>
-          <Text fontSize='subheading' fontWeight='bold'>{toKilos(item.reviewCount)}</Text>
+          <Text fontSize='subheading' fontWeight='bold'>
+            {toKilos(item.reviewCount)}
+          </Text>
           <Text fontSize='subheading'>Reviews</Text>
         </View>
         <View style={styles.itemStat}>
-          <Text fontSize='subheading' fontWeight='bold'>{toKilos(item.ratingAverage)}</Text>
+          <Text fontSize='subheading' fontWeight='bold'>
+            {toKilos(item.ratingAverage)}
+          </Text>
           <Text fontSize='subheading'>Rating</Text>
         </View>
       </View>
     </View>
-  )
-}
+  );
+};
 
-export default RepositoryItem
+export default RepositoryItem;

@@ -1,4 +1,4 @@
-import { View, Pressable, StyleSheet, ScrollView} from 'react-native';
+import { View, Pressable, StyleSheet, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
 import theme from '../theme';
 import Text from './Text';
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     flexWrap: 'nowrap',
     display: 'flex',
     height: 80,
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
   scrollHorisontal: {
     flexDirection: 'row',
@@ -27,11 +27,11 @@ const styles = StyleSheet.create({
   },
   itemSmall: {
     flexGrow: 1,
-    padding: 8
+    padding: 8,
   },
   itemLarge: {
     flexGrow: 1,
-    padding: 8
+    padding: 8,
   },
 });
 
@@ -41,41 +41,53 @@ const AppBar = () => {
 
   const clickSignOut = async () => {
     try {
-      console.log('try logout')
+      console.log('try logout');
       await authStorage.removeAccessToken();
       await apolloClient.resetStore();
     } catch (e) {
-      console.error(e)
+      console.error(e);
     }
   };
 
   const { me, loading } = useUserSignedIn();
   console.log('me', me);
-  console.log('loading', loading)
+  console.log('loading', loading);
 
   return (
     <View style={styles.container}>
-      
-    <ScrollView horisontal style={styles.scrollHorisontal}>
-      <View style={styles.tabsContainer}>
-        <Link to='/' style={styles.itemLarge} text='Repositories' component={View}>
-          <Text fontSize='button' fontWeight='bold' color='light'>Repositories</Text>
-        </Link>
-        {!me && (
-          <Link to='/signIn' style={styles.itemLarge} component={View}>
-            <Text fontSize='button' fontWeight='bold' color='light'>Sign in</Text>
+      <ScrollView horisontal style={styles.scrollHorisontal}>
+        <View style={styles.tabsContainer}>
+          <Link
+            to='/'
+            style={styles.itemLarge}
+            text='Repositories'
+            component={View}
+          >
+            <Text fontSize='button' fontWeight='bold' color='light'>
+              Repositories
+            </Text>
           </Link>
-        )}
-        {me && (
-          <Pressable onPress={clickSignOut} style={styles.itemLarge} component={View}>
-            <Text fontSize='button' fontWeight='bold' color='light'>Sign out</Text>
-          </Pressable>
-        )}
-        
-      </View>
-    </ScrollView>
+          {!me && (
+            <Link to='/signIn' style={styles.itemLarge} component={View}>
+              <Text fontSize='button' fontWeight='bold' color='light'>
+                Sign in
+              </Text>
+            </Link>
+          )}
+          {me && (
+            <Pressable
+              onPress={clickSignOut}
+              style={styles.itemLarge}
+              component={View}
+            >
+              <Text fontSize='button' fontWeight='bold' color='light'>
+                Sign out
+              </Text>
+            </Pressable>
+          )}
+        </View>
+      </ScrollView>
     </View>
-  
   );
 };
 

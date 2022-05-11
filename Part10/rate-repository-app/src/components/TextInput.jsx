@@ -4,9 +4,9 @@ import theme from '../theme';
 const styles = StyleSheet.create({
   error: {
     backgroundColor: theme.palette.error_light,
-  }
+  },
 });
-  
+
 const TextInput = ({ style, error, ...props }) => {
   const textInputStyle = [style, error && styles.error];
   return <NativeTextInput style={textInputStyle} {...props} />;
