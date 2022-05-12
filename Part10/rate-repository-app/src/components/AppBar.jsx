@@ -73,15 +73,22 @@ const AppBar = () => {
             </Link>
           )}
           {me && (
-            <Pressable
-              onPress={clickSignOut}
-              style={styles.itemLarge}
-              component={View}
-            >
-              <Text fontSize="button" fontWeight="bold" color="light">
-                Sign out
-              </Text>
-            </Pressable>
+            <>
+              <Link to="/review" style={styles.itemLarge} component={View}>
+                <Text fontSize="button" fontWeight="bold" color="light">
+                  Create a review
+                </Text>
+              </Link>
+              <Pressable
+                onPress={clickSignOut}
+                style={styles.itemLarge}
+                component={View}
+              >
+                <Text fontSize="button" fontWeight="bold" color="light">
+                  Sign out
+                </Text>
+              </Pressable>
+            </>
           )}
         </View>
       </ScrollView>
