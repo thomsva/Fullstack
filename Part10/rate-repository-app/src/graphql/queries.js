@@ -4,24 +4,19 @@ export const GET_REPOSITORIES = gql`
   query {
     repositories {
       edges {
-        cursor
         node {
           id
-          ownerName
           name
-          createdAt
           fullName
           ratingAverage
           reviewCount
           stargazersCount
-          watchersCount
           forksCount
           openIssuesCount
           url
           ownerAvatarUrl
           description
           language
-          userHasReviewed
         }
       }
     }
@@ -33,6 +28,25 @@ export const GET_USER_SIGNED_IN = gql`
     me {
       id
       username
+    }
+  }
+`;
+
+export const GET_REPOSITORY = gql`
+  query repository($id: ID!) {
+    repository(id: $id) {
+      id
+      name
+      fullName
+      ratingAverage
+      reviewCount
+      stargazersCount
+      forksCount
+      openIssuesCount
+      url
+      ownerAvatarUrl
+      description
+      language
     }
   }
 `;

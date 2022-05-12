@@ -1,5 +1,6 @@
 import RepositoryListContainer from '../../components/RepositoryListContainer';
 import { render } from '@testing-library/react-native';
+import { NativeRouter } from 'react-router-native';
 
 describe('RepositoryList', () => {
   describe('RepositoryListContainer', () => {
@@ -47,8 +48,12 @@ describe('RepositoryList', () => {
         ],
       };
 
+      // NativeRouter used here because useNavigate() may be used only in
+      // the context of a < Router > component.
       const { getAllByTestId } = render(
-        <RepositoryListContainer repositories={repositories} />
+        <NativeRouter>
+          <RepositoryListContainer repositories={repositories} />
+        </NativeRouter>
       );
 
       // debug();

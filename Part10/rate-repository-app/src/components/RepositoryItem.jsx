@@ -1,6 +1,8 @@
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
 import Text from './Text';
 import theme from '../theme';
+import Button from './Button';
+import { openURL } from 'expo-linking';
 
 const styles = StyleSheet.create({
   avatarImage: {
@@ -37,7 +39,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   itemLarge: {
-    flex: 1,
     flexGrow: 2,
     flexWrap: 'nowrap',
     justifyContent: 'center',
@@ -57,7 +58,7 @@ const toKilos = (number) => {
   return Math.round((number / 1000) * 10) / 10 + 'k';
 };
 
-const RepositoryItem = ({ item }) => {
+const RepositoryItem = ({ item, showLink }) => {
   const img = item.ownerAvatarUrl;
   return (
     <View testID="repositoryItem">
@@ -107,6 +108,11 @@ const RepositoryItem = ({ item }) => {
           <Text fontSize="subheading">Rating</Text>
         </View>
       </View>
+      {showLink && (
+        <Pressable onPress={() => openURL(item.url)}>
+          <Button text="GitHub" style={styles.link} />
+        </Pressable>
+      )}
     </View>
   );
 };
