@@ -110,7 +110,7 @@ const RepositoryItem = ({ item, showLink }) => {
       </View>
       {showLink && (
         <Pressable onPress={() => openURL(item.url)}>
-          <Button text="GitHub" style={styles.link} />
+          <Button text="Open in GitHub" style={styles.link} />
         </Pressable>
       )}
     </View>
