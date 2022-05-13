@@ -27,7 +27,6 @@ const AddReview = () => {
     }
   };
 
-  console.log('r', result);
   return <AddReviewForm onSubmit={onSubmit} />;
 };
 
