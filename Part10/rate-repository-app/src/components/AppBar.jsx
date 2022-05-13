@@ -66,11 +66,18 @@ const AppBar = () => {
             </Text>
           </Link>
           {!me && (
-            <Link to="/signIn" style={styles.itemLarge} component={View}>
-              <Text fontSize="button" fontWeight="bold" color="light">
-                Sign in
-              </Text>
-            </Link>
+            <>
+              <Link to="/signin" style={styles.itemLarge} component={View}>
+                <Text fontSize="button" fontWeight="bold" color="light">
+                  Sign in
+                </Text>
+              </Link>
+              <Link to="/signup" style={styles.itemLarge} component={View}>
+                <Text fontSize="button" fontWeight="bold" color="light">
+                  Sign up
+                </Text>
+              </Link>
+            </>
           )}
           {me && (
             <>

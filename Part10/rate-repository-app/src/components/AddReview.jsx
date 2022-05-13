@@ -9,7 +9,7 @@ const AddReview = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (values) => {
-    const newReview = {
+    const review = {
       ownerName: values.ownerName,
       repositoryName: values.repositoryName,
       rating: parseInt(values.rating),
@@ -18,11 +18,12 @@ const AddReview = () => {
 
     try {
       const { data } = await mutate({
-        variables: { review: newReview },
+        variables: { review: review },
       });
       const destination = data.createReview.repositoryId;
       navigate('/repository/' + destination, { replace: true });
     } catch (e) {
+      console.log('Create review result:', result);
       console.error(e);
     }
   };
