@@ -38,24 +38,25 @@ const styles = StyleSheet.create({
 });
 
 const initialValues = {
-  ownerName: 'x',
-  repositoryName: 'x',
-  rating: '1',
-  text: 'x',
+  ownerName: '',
+  repositoryName: '',
+  rating: '',
+  text: '',
 };
 
 const validationSchema = yup.object().shape({
   ownerName: yup.string().required('Repository owner name is required'),
   repositoryName: yup.string().required('Repository name is required'),
-  rating: yup.number().required('Not a valid number'),
-  text: yup.string().required('Review is required'),
+  rating: yup
+    .number()
+    .required('Rating is required')
+    .positive('Rating has to be a positive number')
+    .max(100, 'Rating has to be 100 or less')
+    .integer('Only integer values allowed'),
+  text: yup.string(),
 });
 
 const AddReviewForm = ({ onSubmit }) => {
-  // const onSubmit = (values) => {
-  //   console.log('form subitted', values);
-  // };
-
   return (
     <View style={styles.containerVertical}>
       <Formik
@@ -84,6 +85,7 @@ const AddReviewForm = ({ onSubmit }) => {
               name="text"
               placeholder="Review"
               style={styles.itemTextField}
+              multiline={true}
             />
             <Pressable onPress={handleSubmit}>
               <Button text="Create review" />

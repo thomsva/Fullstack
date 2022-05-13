@@ -24,7 +24,6 @@ const Main = () => {
         <Route path="repository" element={<SingleRepository />}>
           <Route path=":id" element={<SingleRepository />} />
         </Route>
-        <Route path=":id" element={<SingleRepository />} />
         <Route path="/signin" element={<SignIn />} exact />
         <Route path="/review" element={<AddReview />} exact />
         <Route path="*" element={<Navigate to="/" replace />} />
