@@ -27,13 +27,12 @@ const SingleRepository = () => {
   //const reviewNodes = data.repository.reviews.edges.map((edge) => edge.node);
   const reviewNodes = data.repository.reviews.edges;
 
-  console.log('rn', reviewNodes);
-
   return (
     <FlatList
       data={reviewNodes}
       renderItem={({ item }) => <ReviewItem review={item.node} />}
       ItemSeparatorComponent={ItemSeparator}
+      keyExtractor={({ node }) => node.id}
       ListHeaderComponent={() => (
         <RepositoryItem item={data.repository} showLink={true} />
       )}
