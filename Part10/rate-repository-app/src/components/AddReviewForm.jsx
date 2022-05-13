@@ -49,6 +49,7 @@ const validationSchema = yup.object().shape({
   repositoryName: yup.string().required('Repository name is required'),
   rating: yup
     .number()
+    .typeError('Rating must be a number')
     .required('Rating is required')
     .positive('Rating has to be a positive number')
     .max(100, 'Rating has to be 100 or less')
