@@ -97,11 +97,15 @@ export const GET_OWN_REVIEWS = gql`
       reviews {
         edges {
           node {
+            id
             userId
             repositoryId
             rating
             createdAt
             text
+            repository {
+              fullName
+            }
             user {
               username
             }

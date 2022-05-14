@@ -25,18 +25,16 @@ const SingleRepository = () => {
 
   const { data, error, loading, fetchMore } = useQuery(GET_REPOSITORY, {
     variables,
-    fetchPolicy: 'network-only',
+    fetchPolicy: 'cache-and-network',
   });
 
   if (loading && reviewNodes === undefined) return <Text>Loading</Text>;
   if (error) return <Text>Error</Text>;
 
-  console.log('data.repository.reviews ', data.repository.reviews);
-  //const reviewNodes = data.repository.reviews.edges.map((edge) => edge.node);
   const reviewNodes = data.repository.reviews.edges;
 
   const handleFetchMore = () => {
-    console.log('handle');
+    console.log('Reached end, fetching more...');
     const canFetchMore =
       !loading && data?.repository.reviews.pageInfo.hasNextPage;
 

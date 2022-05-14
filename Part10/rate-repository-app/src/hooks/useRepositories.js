@@ -10,11 +10,9 @@ const useRepositories = (variables) => {
 
   const handleFetchMore = () => {
     const canFetchMore = !loading && data?.repositories.pageInfo.hasNextPage;
-
     if (!canFetchMore) {
       return;
     }
-
     fetchMore({
       variables: {
         after: data.repositories.pageInfo.endCursor,
@@ -23,15 +21,7 @@ const useRepositories = (variables) => {
     });
   };
 
-  if (error) console.log('useRepositories error ', error);
-
-  // if (data)
-  //   return {
-  //     repositories: data.repositories,
-  //     fetchMore: handleFetchMore,
-  //     loading,
-  //   };
-  // return { loading };
+  if (error) console.log('useRepositories loading error ', error);
 
   return {
     repositories: data ? data.repositories : undefined,

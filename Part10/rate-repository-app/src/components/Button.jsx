@@ -13,11 +13,36 @@ const styles = StyleSheet.create({
   buttonText: {
     alignSelf: 'center',
   },
+  colorLight: {
+    backgroundColor: theme.palette.light,
+  },
+  colorPrimary: {
+    backgroundColor: theme.palette.primary,
+  },
+  colorDull: {
+    backgroundColor: theme.palette.dull,
+  },
+  colorPrimaryLight: {
+    backgroundColor: theme.palette.primary_light,
+  },
+  colorSecondary: {
+    backgroundColor: theme.palette.secondary,
+  },
 });
 
-const Button = ({ text }) => {
+const Button = ({ color, style, text }) => {
+  const buttonStyle = [
+    styles.itemButton,
+    color === 'primary' && styles.colorPrimary,
+    color === 'dull' && styles.colorDull,
+    color === 'primaryLight' && styles.colorPrimaryLight,
+    color === 'secondary' && styles.colorSecondary,
+    color === 'light' && styles.colorLight,
+    style,
+  ];
+
   return (
-    <View style={styles.itemButton}>
+    <View style={buttonStyle}>
       <Text
         fontSize="button"
         fontWeight="bold"

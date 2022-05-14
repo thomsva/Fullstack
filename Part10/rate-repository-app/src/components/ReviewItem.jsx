@@ -1,7 +1,11 @@
-import { StyleSheet, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, View } from 'react-native';
 import Text from './Text';
 import theme from '../theme';
 import { format } from 'date-fns';
+import Button from './Button';
+import { useNavigate } from 'react-router-native';
+import { useMutation } from '@apollo/client';
+import { DELETE_REVIEW } from '../graphql/mutations';
 
 // format(new Date(2014, 1, 11), 'yyyy-MM-dd');
 
@@ -50,7 +54,36 @@ const styles = StyleSheet.create({
   },
 });
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, showButtons, refetch }) => {
+  const navigate = useNavigate();
+  const [mutate] = useMutation(DELETE_REVIEW);
+
+  const onPressDelete = () => {
+    Alert.alert(
+      'Delete review',
+      'Are you sure you want to delete this review?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'Delete', onPress: () => deleteItem() },
+      ]
+    );
+  };
+
+  const deleteItem = async () => {
+    try {
+      await mutate({
+        variables: { deleteReviewId: review.id },
+      });
+      await refetch();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <View>
       <View style={styles.containerHorisontal}>
@@ -63,7 +96,8 @@ const ReviewItem = ({ review }) => {
         <View style={styles.containerVertical}>
           <View style={styles.item}>
             <Text fontSize="heading" fontWeight="bold">
-              {review.user.username}
+              {showButtons && review.repository.fullName}
+              {!showButtons && review.user.username}
             </Text>
           </View>
           <View style={styles.date}>
@@ -76,6 +110,19 @@ const ReviewItem = ({ review }) => {
           </View>
         </View>
       </View>
+
+      {showButtons && (
+        <View style={styles.containerHorisontal}>
+          <Pressable
+            onPress={() => navigate('/repository/' + review.repositoryId)}
+          >
+            <Button text="View repository" />
+          </Pressable>
+          <Pressable onPress={() => onPressDelete()}>
+            <Button color="secondary" text="Delete review" />
+          </Pressable>
+        </View>
+      )}
     </View>
   );
 };
