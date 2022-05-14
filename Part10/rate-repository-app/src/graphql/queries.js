@@ -43,7 +43,7 @@ export const GET_REPOSITORIES = gql`
 `;
 
 export const GET_USER_SIGNED_IN = gql`
-  query {
+  query me {
     me {
       id
       username
@@ -82,6 +82,27 @@ export const GET_REPOSITORY = gql`
             createdAt
             user {
               id
+              username
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_OWN_REVIEWS = gql`
+  query {
+    me {
+      reviews {
+        edges {
+          node {
+            userId
+            repositoryId
+            rating
+            createdAt
+            text
+            user {
               username
             }
           }

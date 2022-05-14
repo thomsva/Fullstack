@@ -20,7 +20,7 @@ const SingleRepository = () => {
 
   const [variables, setVariables] = useState({
     id,
-    first: 5,
+    first: 3,
   });
 
   const { data, error, loading, fetchMore } = useQuery(GET_REPOSITORY, {

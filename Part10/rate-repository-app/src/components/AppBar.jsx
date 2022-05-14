@@ -86,6 +86,11 @@ const AppBar = () => {
                   Create a review
                 </Text>
               </Link>
+              <Link to="/myreviews" style={styles.itemLarge} component={View}>
+                <Text fontSize="button" fontWeight="bold" color="light">
+                  My reviews
+                </Text>
+              </Link>
               <Pressable
                 onPress={clickSignOut}
                 style={styles.itemLarge}
