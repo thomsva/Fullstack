@@ -1,5 +1,4 @@
 import { useQuery } from '@apollo/client';
-import { useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useParams } from 'react-router-native';
 import { GET_REPOSITORY } from '../graphql/queries';
@@ -18,49 +17,51 @@ const ItemSeparator = () => <View style={styles.separator} />;
 const SingleRepository = () => {
   const { id } = useParams();
 
-  const [variables, setVariables] = useState({
+  const variables = {
     id,
     first: 3,
-  });
+  };
 
   const { data, error, loading, fetchMore } = useQuery(GET_REPOSITORY, {
     variables,
     fetchPolicy: 'cache-and-network',
   });
 
-  if (loading && reviewNodes === undefined) return <Text>Loading</Text>;
+  const repository = data?.repository;
+
   if (error) return <Text>Error</Text>;
 
-  const reviewNodes = data.repository.reviews.edges;
+  const reviewNodes = repository
+    ? repository.reviews.edges.map(({ node }) => node)
+    : [];
 
   const handleFetchMore = () => {
     console.log('Reached end, fetching more...');
-    const canFetchMore =
-      !loading && data?.repository.reviews.pageInfo.hasNextPage;
+    const canFetchMore = !loading && repository?.reviews.pageInfo.hasNextPage;
 
     if (!canFetchMore) {
       return;
     }
 
-    setVariables({
-      ...variables,
-      after: data.repository.reviews.pageInfo.endCursor,
+    fetchMore({
+      variables: {
+        ...variables,
+        after: repository.reviews.pageInfo.endCursor,
+      },
     });
-
-    fetchMore({ variables });
   };
 
   return (
     <FlatList
       data={reviewNodes}
-      renderItem={({ item }) => <ReviewItem review={item.node} />}
+      renderItem={({ item }) => <ReviewItem review={item} />}
       ItemSeparatorComponent={ItemSeparator}
-      keyExtractor={({ node }) => node.id}
+      keyExtractor={({ id }) => id}
       onEndReached={handleFetchMore}
       onEndReachedThreshold={0.1}
-      ListHeaderComponent={() => (
-        <RepositoryItem item={data.repository} showLink={true} />
-      )}
+      ListHeaderComponent={() =>
+        repository ? <RepositoryItem item={repository} showLink={true} /> : null
+      }
     />
   );
 };
