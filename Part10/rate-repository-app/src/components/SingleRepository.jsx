@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client';
+import { useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useParams } from 'react-router-native';
 import { GET_REPOSITORY } from '../graphql/queries';
@@ -16,16 +17,40 @@ const ItemSeparator = () => <View style={styles.separator} />;
 
 const SingleRepository = () => {
   const { id } = useParams();
-  const { data, error, loading } = useQuery(GET_REPOSITORY, {
-    variables: { id },
-    fetchPolicy: 'cache-and-network',
+
+  const [variables, setVariables] = useState({
+    id,
+    first: 5,
   });
 
-  if (loading) return <Text>Loading</Text>;
+  const { data, error, loading, fetchMore } = useQuery(GET_REPOSITORY, {
+    variables,
+    fetchPolicy: 'network-only',
+  });
+
+  if (loading && reviewNodes === undefined) return <Text>Loading</Text>;
   if (error) return <Text>Error</Text>;
 
+  console.log('data.repository.reviews ', data.repository.reviews);
   //const reviewNodes = data.repository.reviews.edges.map((edge) => edge.node);
   const reviewNodes = data.repository.reviews.edges;
+
+  const handleFetchMore = () => {
+    console.log('handle');
+    const canFetchMore =
+      !loading && data?.repository.reviews.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    setVariables({
+      ...variables,
+      after: data.repository.reviews.pageInfo.endCursor,
+    });
+
+    fetchMore({ variables });
+  };
 
   return (
     <FlatList
@@ -33,6 +58,8 @@ const SingleRepository = () => {
       renderItem={({ item }) => <ReviewItem review={item.node} />}
       ItemSeparatorComponent={ItemSeparator}
       keyExtractor={({ node }) => node.id}
+      onEndReached={handleFetchMore}
+      onEndReachedThreshold={0.1}
       ListHeaderComponent={() => (
         <RepositoryItem item={data.repository} showLink={true} />
       )}

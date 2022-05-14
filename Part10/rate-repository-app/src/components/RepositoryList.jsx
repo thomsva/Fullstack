@@ -8,15 +8,16 @@ import Text from './Text';
 
 const RepositoryList = () => {
   const [text, setText] = useState('');
-  const [deouncedText] = useDebounce(text, 500);
+  const [debouncedText] = useDebounce(text, 500);
 
   const [variables, setVariables] = useState({
     orderBy: 'RATING_AVERAGE',
     orderDirection: 'DESC',
     searchKeyword: text,
+    first: 20,
   });
 
-  const { repositories } = useRepositories(variables);
+  const { repositories, fetchMore } = useRepositories(variables);
 
   const setSortOrder = (sortOrder) => {
     const { orderBy, orderDirection } = sortOrder;
@@ -24,14 +25,23 @@ const RepositoryList = () => {
   };
 
   useEffect(() => {
-    setVariables({ ...variables, searchKeyword: deouncedText });
-  }, [deouncedText]);
+    setVariables({ ...variables, searchKeyword: debouncedText });
+  }, [debouncedText]);
+
+  const onEndReached = () => {
+    console.log('You have reached the end of the list');
+    fetchMore();
+  };
+
   return (
     <>
       <RepositoryListSortOrder setSortOrder={setSortOrder} />
       <Text>Filter:</Text>
       <TextInput onChangeText={setText} value={text} />
-      <RepositoryListContainer repositories={repositories} />
+      <RepositoryListContainer
+        repositories={repositories}
+        onEndReached={onEndReached}
+      />
     </>
   );
 };

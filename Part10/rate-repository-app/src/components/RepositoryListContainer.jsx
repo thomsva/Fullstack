@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-const RepositoryList = ({ repositories }) => {
+const RepositoryListContainer = ({ repositories, onEndReached }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
@@ -20,13 +20,16 @@ const RepositoryList = ({ repositories }) => {
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
       renderItem={({ item }) => (
         <Pressable onPress={() => navigate('repository/' + item.id)}>
           <RepositoryItem item={item} showLink={false} />
         </Pressable>
       )}
+      keyExtractor={(item) => item.id}
     />
   );
 };
 
-export default RepositoryList;
+export default RepositoryListContainer;
